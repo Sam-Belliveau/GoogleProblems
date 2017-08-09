@@ -4,7 +4,7 @@ public class TiddyNumbers {
 	
 	public static void main(String[] args) throws Exception {
 		
-		Scanner input = new Scanner(new File("src/B-small-practice.in"));
+		Scanner input = new Scanner(new File("src/B-large-practice.in"));
 		
 		String str, n, T;
 		T = input.nextLine();
@@ -15,21 +15,32 @@ public class TiddyNumbers {
 			n = input.nextLine();
 			str = n;
 			char convert [] = str.toCharArray();
-			boolean change = false;
 			for(int i = 0; i < convert.length; i++){
-				for(int ii = convert.length-1; ii >= 1; ii--){
-					temp[0] = Character.getNumericValue(convert[ii]);
-					temp[1] = Character.getNumericValue(convert[ii-1]);
+				boolean carry = true;
+				for(int ii = 0; ii < convert.length-1; ii++){
 					
-					if (temp[1]>=temp[0]){
-						convert[ii-1] = digits[Character.getNumericValue(convert[ii-1])-1];
-						change = true;
-						convert[ii] = '9';
+					temp[0] = Character.getNumericValue(convert[ii]);
+					temp[1] = Character.getNumericValue(convert[ii+1]);
+					
+					if (temp[1]<temp[0]){ 
+						convert[ii+1] = '9'; 
+						if (carry){
+							convert[ii] = digits[temp[0]-1];
+							carry = false;
+						}
 					}
+
 				}
 			}
-			for(int i = 0; i < convert.length; i++){
-				System.out.print(convert[i]);
+			System.out.print("Case #" + tt + ": ");
+			if (convert[0] == '0'){
+				for(int i = 1; i < convert.length; i++){
+					System.out.print(convert[i]);
+				}
+			}else{
+				for(int i = 0; i < convert.length; i++){
+					System.out.print(convert[i]);
+				}
 			}
 			System.out.println();
 		}
